@@ -1,0 +1,110 @@
+<apex:page showHeader="true" sidebar="true" extensions="UAR_PrivilegeController" standardController="UAR_Privileges__c">
+    <style>
+    .italic{
+        font-style: italic;
+    }
+    .fields{
+        width: 350px;
+    }
+    </style>
+    <apex:sectionHeader title="Privileges" subtitle="" />
+
+    <apex:outputPanel id="WholeForm">
+        <apex:form id="theform">
+            <apex:pageBlock mode="edit" title="Privileges" id="thepageblock">
+                <apex:pageBlockButtons >
+                    <apex:commandButton action="{!save}" value="Save"/>
+                    <apex:commandButton action="{!cancel}" value="Cancel"/>
+                </apex:pageBlockButtons>
+                <apex:outputPanel id="panel1">
+                    <apex:pageBlockSection title="" columns="1" collapsible="false">
+                    
+
+                        <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Privilege Type:" />
+                                <apex:selectList multiselect="false" size="1" value="{!selectedPrivilegeType}">
+                                <apex:actionSupport event="onchange" action="{!clearFormFields}" rerender="theform"/>
+                                    <apex:selectOptions value="{!lPrivilegeTypes}" />
+                                </apex:selectList> 
+                                </apex:pageBlockSectionItem>  
+
+                        <apex:pageBlockSectionItem rendered="{!IF(selectedPrivilegeType='Group',true,false)}" >
+                                <apex:outputLabel value="Group:" />
+                                <apex:selectList multiselect="false" size="1" value="{!oPrivilege.PrivilegeTypeId__c}" id="sGroups">
+                                    <apex:selectOptions value="{!lGroups}" />
+                                </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem rendered="{!IF(selectedPrivilegeType='Queue',true,false)}" >
+                                <apex:outputLabel value="Queue:" />
+                                <apex:selectList multiselect="false" size="1" value="{!oPrivilege.PrivilegeTypeId__c}">
+                                    <apex:selectOptions value="{!lQueues}" />
+                                </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem rendered="{!IF(selectedPrivilegeType='License',true,false)}">
+                                <apex:outputLabel value="License:" />
+                                <apex:selectList multiselect="false" size="1" value="{!oPrivilege.PrivilegeTypeId__c}">
+                                    <apex:selectOptions value="{!lLicenses}" />
+                                </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem rendered="{!IF(selectedPrivilegeType='Permission Set',true,false)}" >
+                                <apex:outputLabel value="Permission Set:" />
+                                <apex:selectList multiselect="false" size="1" value="{!oPrivilege.PrivilegeTypeId__c}">
+                                    <apex:selectOptions value="{!lPermissionSets}" />
+                                </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem rendered="{!IF(selectedPrivilegeType='Profile',true,false)}" >
+                                <apex:outputLabel value="Profile:" />
+                                <apex:selectList multiselect="false" size="1" value="{!oPrivilege.PrivilegeTypeId__c}">
+                                    <apex:selectOptions value="{!lProfiles}" />
+                                </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem rendered="{!IF(selectedPrivilegeType='Role',true,false)}" >
+                                <apex:outputLabel value="Role:" />
+                                <apex:selectList multiselect="false" size="1" value="{!oPrivilege.PrivilegeTypeId__c}">
+                                    <apex:selectOptions value="{!lRoles}" />
+                                </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem rendered="{!IF(selectedPrivilegeType='Installed Package License',true,false)}" >
+                                <apex:outputLabel value="Installed Package License:" />
+                                <apex:selectList multiselect="false" size="1" value="{!oPrivilege.PrivilegeTypeId__c}">
+                                    <apex:selectOptions value="{!lPackageLicenses}" />
+                                </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <!-- <apex:pageBlockSectionItem rendered="{!IF(selectedPrivilegeType='User Attribute',true,false)}" >
+                            <apex:outputLabel value="Field API Name:" />
+                            <apex:inputText value="{!oPrivilege.Field_API_Name__c}" styleClass="fields" />
+                        </apex:pageBlockSectionItem> -->
+
+                        <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Description:" />
+                                <apex:inputTextarea value="{!oPrivilege.Description__c}" styleClass="fields" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Grant Instructions:" />
+                                <apex:inputTextarea value="{!oPrivilege.GrantInstructions__c}" styleClass="fields" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Revoke Instructions:" />
+                                <apex:inputTextarea value="{!oPrivilege.RevokeInstructions__c}" styleClass="fields" />
+                        </apex:pageBlockSectionItem>
+                        
+                        <!-- <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="Combination:" />
+                            <apex:outputText value="{!combinationName}" styleClass="fields" />
+                        </apex:pageBlockSectionItem> -->
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </apex:form>
+    </apex:outputPanel>
+</apex:page>

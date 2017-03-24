@@ -1,0 +1,5 @@
+<apex:page showHeader="true" sidebar="true">
+	<p> &nbsp;</p>
+	<h3>Your request has been submitted. You will receive a status update email when the request has been processed.</h3>	
+	<p> &nbsp;</p>
+</apex:page>

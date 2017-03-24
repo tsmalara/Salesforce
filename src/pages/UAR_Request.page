@@ -1,0 +1,78 @@
+<apex:page extensions="UAR_RequestController" showHeader="true" sidebar="true" standardController="UAR_Request__c">
+	<style>
+	.italic{
+		font-style: italic;
+	}
+	.fields{
+		width: 250px;
+	}
+	</style>
+	<apex:sectionHeader title="User Access Request" subtitle="" />
+
+    <apex:outputPanel id="WholeForm">
+		<apex:form id="theform">
+			<apex:pageBlock mode="edit" title="User Access Request" id="thepageblock">
+				<apex:pageBlockButtons >
+                	<apex:commandButton action="{!saveRecord}" value="Submit Request" disabled="{!If(lSelectedCombos == null || lSelectedCombos.empty, true, false)}"/>
+                	<apex:commandButton action="{!cancel}" value="Cancel"/>
+            	</apex:pageBlockButtons>
+				<apex:outputPanel id="panel1">
+					<apex:pageBlockSection title="Create New Request" columns="1" collapsible="false">
+						 
+						<apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Requested For:" />
+                            <apex:outputPanel styleClass="requiredInput" layout="block">
+	    						<apex:outputPanel styleClass="requiredBlock" layout="block"/>
+	                            <apex:inputField value="{!oRequest.RequestedFor__c}" required="true"/>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem >
+                        	<apex:outputLabel value="Action:" />
+                            	<apex:selectRadio value="{!oRequest.Action__c}">
+					            	<apex:selectOptions value="{!lActions}" />
+				            	</apex:selectRadio>                            
+                        </apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem HelpText="Select an application to request access.">
+		                    <apex:outputLabel value="Application Name:" for="lApplication" />
+		                    <apex:outputPanel styleClass="requiredInput" layout="block">
+								<apex:outputPanel styleClass="requiredBlock" layout="block"/>
+			                    <apex:selectList size="1" value="{!selectedApplication}" id="lApplication" required="true">
+			                    	<apex:actionSupport event="onchange" action="{!clearFormFields}" rerender="theform"/>
+				    				<apex:selectOptions value="{!lApps}" />
+					    		</apex:selectList>
+				    		</apex:outputPanel>
+	                	</apex:pageBlockSectionItem>
+	                	
+                        <apex:pageBlockSectionItem >
+			    			<apex:outputLabel value="Request Name (Hold ctrl/command to select multiple items):" for="lComboName" />
+			    			<apex:outputPanel styleClass="requiredInput" layout="block">
+    						<apex:outputPanel styleClass="requiredBlock" layout="block"/>
+	                		<apex:selectList multiselect="true" size="10" value="{!lSelectedCombos}" id="lComboName" style="width: 900px">
+	                		 	<apex:actionSupport event="onchange" rerender="theform"/>              		 
+			    				<apex:selectOptions value="{!lComboName}"/>
+			    			</apex:selectList>
+			    			</apex:outputPanel>
+	                	</apex:pageBlockSectionItem>
+	                	
+                        <apex:pageBlockSectionItem rendered="{!IF(oRequest.Combination__c <> '', true, false)}" dataStyleClass="italic">
+                           <apex:outputLabel value=" " />
+                           <apex:outputText value="{!sComboDescription}" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem >
+                           <apex:outputLabel value="Justification:" />
+                           <apex:inputField value="{!oRequest.Justification__c}" required="false" style="width: 250px; overflow: auto;" />
+                        </apex:pageBlockSectionItem>
+
+
+                	</apex:pageBlockSection>
+		    	</apex:outputPanel>
+	    	</apex:pageBlock>
+    	</apex:form>
+	
+    </apex:outputPanel>
+
+
+</apex:page>
